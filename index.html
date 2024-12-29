@@ -2,14 +2,24 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>圈钱仔账号收集</title>
+<title>圈钱仔账号预警 - 米兰数码</title>
 <style>
     body {
-        background: #f0f8ff; /* 轻柔的背景色 */
-        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: #f0f8ff;
+        font-family: Arial, sans-serif;
         text-align: center;
     }
-    
+
+    h1 {
+        color: #795548;
+        margin-top: 20px;
+    }
+
+    .warning {
+        color: red;
+        font-weight: bold;
+    }
+
     .cartoon-table {
         margin: 50px auto;
         border-collapse: separate;
@@ -55,16 +65,78 @@
     .cartoon-table th:last-child {
         border-radius: 0 15px 15px 0;
     }
+
+    .search-bar {
+        margin: 20px auto;
+        width: 80%;
+        max-width: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-bar input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-bar button {
+        padding: 10px 20px;
+        margin-left: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .search-bar button.search {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .search-bar button.reset {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .search-bar button:hover {
+        opacity: 0.8;
+    }
+
+    .contact-info {
+        margin: 20px auto;
+        width: 80%;
+        max-width: 600px;
+        font-size: 1.2em;
+        color: #795548;
+    }
+
+    @media (max-width: 600px) {
+        .cartoon-table {
+            width: 100%;
+        }
+    }
 </style>
 </head>
 <body>
 
-<h1>收集圈钱仔的账号信息，米兰数码收集</h1>
-<h1>麻烦多多转发，让更多人避免被圈钱</h1>
-<table class="cartoon-table">
+<h1>圈钱仔账号预警</h1>
+<p class="warning">注意：以下账号涉嫌非法行为，请勿与其进行交易。</p>
+<p>米兰数码收集并发布这些信息，旨在帮助大家避免受骗。如果您发现了新的可疑账号，请通过下方提供的邮箱联系我们。</p>
+
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜索QQ号或微信账号">
+    <button class="search" onclick="filterTable()">查询</button>
+    <button class="reset" onclick="resetSearch()">重置</button>
+</div>
+
+<table class="cartoon-table" id="accountsTable">
     <thead>
         <tr>
-           <th>微信账号</th>
+            <th>微信账号</th>
             <th>QQ账号</th>
             <th>登记</th>
             <th>时间</th>
@@ -342,9 +414,41 @@
     <td>圈钱</td>
     <td>2024-12-29</td>
 </tr>
-
     </tbody>
 </table>
-<h1>提交信息邮箱2408350440@qq.com</h1>
+
+<!-- 移除原有的提交表单，替换为联系信息 -->
+<div class="contact-info">
+    <p>如果您发现了新的可疑账号或有任何疑问，请通过以下邮箱联系我们：</p>
+    <p><strong>Email:</strong>2408350440@qq.com</a></p>
+</div>
+
+<script>
+function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("accountsTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1]; // 搜索QQ号列
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function resetSearch() {
+    document.getElementById("searchInput").value = "";
+    filterTable(); // 重置后重新显示所有行
+}
+</script>
+
 </body>
 </html>
