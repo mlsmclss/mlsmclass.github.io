@@ -89,7 +89,7 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3;
+        transition: background-color 0.3s;
     }
 
     .search-bar button.search {
@@ -420,34 +420,38 @@
     <td>圈钱</td>
     <td>2024-12-29</td>
 </tr>
-
     </tbody>
 </table>
 
 <!-- 移除原有的提交表单，替换为联系信息 -->
 <div class="contact-info">
     <p>如果您发现了新的可疑账号或有任何疑问，请通过以下邮箱联系我们：</p>
-    <p><strong>Email:</strong>2408350440@qq.com</a></p>
+    <p><strong>Email:</strong> 2408350440@qq.com</a></p>
 </div>
 
 <script>
 function filterTable() {
-    var input, filter, table, tr, td, i, txtValue;
+    var input, filter, table, tr, tds, i, txtValue, found;
     input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
+    filter = input.value.toLowerCase(); // 转换为小写以便不区分大小写搜索
     table = document.getElementById("accountsTable");
     tr = table.getElementsByTagName("tr");
 
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1]; // 搜索QQ号列
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        tds = tr[i].getElementsByTagName("td"); // 获取所有<td>元素
+        found = false;
+
+        // 遍历每一行的所有单元格
+        for (var j = 0; j < tds.length; j++) {
+            txtValue = tds[j].textContent || tds[j].innerText;
+            if (txtValue.toLowerCase().includes(filter)) {
+                found = true;
+                break;
             }
         }
+
+        // 如果找到匹配项，则显示该行，否则隐藏
+        tr[i].style.display = found ? "" : "none";
     }
 }
 
